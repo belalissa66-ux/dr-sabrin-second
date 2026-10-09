@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Sabrina Pets Clinic — Irbid</title>
+<meta name="description" content="Dr. Sabrina Pets Clinic — Irbid's trusted address for calm, attentive cat care (and the occasional dog).">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23E8637F'/%3E%3Crect x='42' y='24' width='16' height='52' rx='4' fill='white'/%3E%3Crect x='24' y='42' width='52' height='16' rx='4' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#E8637F;
+    --accent-light:#F4A5B8;
+    --accent-dark:#C94A64;
+    --navy:#2E3A8C;
+    --gold:#F0B429;
+    --bg:#FBF5F2;
+    --bg-alt:#F6EAE6;
+    --surface:rgba(255,255,255,0.72);
+    --surface-strong:rgba(255,255,255,0.88);
+    --surface-border:rgba(201,74,100,0.16);
+    --text:#2E2630;
+    --text-muted:#8A7B82;
+    --radius-lg:20px;
+    --radius-xl:28px;
+    --container:1180px;
+    --accent-rgb:232,99,127;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:auto;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Archivo',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.01em; color:var(--text);}
+  p{color:var(--text-muted);}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; border:none; cursor:pointer; background:none;}
+  ::selection{background:var(--accent); color:#fff;}
+
+  ::-webkit-scrollbar{width:11px;}
+  ::-webkit-scrollbar-track{background:var(--bg-alt);}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent-light),var(--accent)); border-radius:10px; border:2px solid var(--bg-alt);}
+  ::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--accent),var(--accent-dark)); box-shadow:0 0 8px rgba(var(--accent-rgb),0.5);}
+
+  .container{max-width:var(--container); margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:12px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-dark);
+    background:rgba(var(--accent-rgb),0.08); border:1px solid var(--surface-border);
+    padding:6px 14px; border-radius:999px; margin-bottom:18px;
+  }
+  .section-head{max-width:620px; margin:0 auto 56px; text-align:center;}
+  .section-head h2{font-size:clamp(28px,4vw,42px); margin-bottom:14px;}
+  .section-head p{font-size:16px;}
+
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+
+  /* ---------- background particle canvas ---------- */
+  #bgCanvas{position:fixed; inset:0; z-index:0; pointer-events:none;}
+
+  /* ---------- loader ---------- */
+  #loader{
+    position:fixed; inset:0; z-index:300; background:var(--bg);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #loader.hidden{opacity:0; visibility:hidden; pointer-events:none;}
+  .loader-logo{width:104px; height:104px; border-radius:28px; overflow:hidden; box-shadow:0 18px 40px rgba(46,30,38,0.12);}
+  .loader-logo img{width:100%; height:100%; object-fit:cover;}
+  .loader-text{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted);}
+  .loader-bar-track{width:200px; height:4px; background:var(--bg-alt); border-radius:4px; overflow:hidden;}
+  .loader-bar-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent-light)); transition:width .15s ease;}
+  .loader-pct{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent-dark);}
+
+  /* ---------- top scroll progress ---------- */
+  #scrollProgress{position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent-light)); z-index:250;}
+
+  /* ---------- navbar ---------- */
+  .navbar{
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 32px; transition:all .5s cubic-bezier(.4,0,.2,1);
+  }
+  .navbar::before{
+    content:''; position:absolute; inset:0; z-index:-1;
+    background:linear-gradient(180deg,rgba(251,245,242,0.9),transparent);
+    opacity:1; transition:opacity .4s ease;
+  }
+  .navbar.scrolled{
+    top:14px; left:50%; transform:translateX(-50%); right:auto;
+    width:min(820px,90%); padding:10px 14px 10px 16px;
+    background:var(--surface-strong); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--surface-border); border-radius:999px;
+    box-shadow:0 10px 32px rgba(46,30,38,0.1);
+  }
+  .navbar.scrolled::before{opacity:0;}
+  .nav-brand{display:flex; align-items:center; gap:10px;}
+  .nav-brand img{width:38px; height:38px; border-radius:11px; object-fit:cover;}
+  .nav-brand span{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px;}
+  .nav-links{display:flex; align-items:center; gap:28px; font-size:14px; font-weight:500;}
+  .nav-links a{color:var(--text); opacity:0.75; transition:opacity .2s ease;}
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{
+    font-size:13px; font-weight:600; padding:10px 20px; border-radius:999px;
+    background:var(--accent); color:#fff; transition:transform .2s ease, box-shadow .2s ease;
+    box-shadow:0 8px 20px rgba(var(--accent-rgb),0.3);
+  }
+  .nav-cta:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(var(--accent-rgb),0.4);}
+  .nav-menu-group{display:flex; align-items:center; gap:28px;}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:15px 28px; border-radius:999px;
+    font-size:15px; font-weight:600; transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  }
+  .btn-primary{background:var(--accent); color:#fff; box-shadow:0 12px 28px rgba(var(--accent-rgb),0.32);}
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 16px 36px rgba(var(--accent-rgb),0.4);}
+  .btn-secondary{background:transparent; color:var(--text); border:1.5px solid rgba(46,30,38,0.18);}
+  .btn-secondary:hover{border-color:var(--accent); color:var(--accent-dark); transform:translateY(-3px);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:140px 24px 100px; overflow:hidden;
+  }
+  .hero__grid{
+    position:absolute; inset:0; pointer-events:none;
+    background-image:linear-gradient(rgba(46,30,38,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(46,30,38,.05) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(ellipse 60% 50% at 50% 40%, black 0%, transparent 75%);
+    -webkit-mask-image:radial-gradient(ellipse 60% 50% at 50% 40%, black 0%, transparent 75%);
+  }
+  .hero__orb{position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none;}
+  .hero__orb--1{width:440px; height:440px; background:var(--accent-light); opacity:.55; top:-140px; left:-120px;}
+  .hero__orb--2{width:380px; height:380px; background:#FBD9CE; opacity:.6; bottom:-160px; right:-100px;}
+  .hero__orb--3{width:260px; height:260px; background:var(--accent); opacity:.18; top:30%; right:8%;}
+  .hero-content{position:relative; z-index:2; max-width:760px; opacity:0; transform:translateY(22px); transition:opacity 1s ease .2s, transform 1s cubic-bezier(.16,1,.3,1) .2s;}
+  .hero-content.in{opacity:1; transform:translateY(0);}
+  .hero h1{font-size:clamp(36px,6vw,66px); line-height:1.08; margin-bottom:22px;}
+  .hero h1 em{font-style:normal; color:var(--accent-dark);}
+  .hero p.lead{font-size:18px; max-width:540px; margin:0 auto 36px;}
+  .hero-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:56px;}
+  .scroll-hint{position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); animation:bob 2.2s ease-in-out infinite;}
+  .scroll-hint span.line{width:1px; height:34px; background:linear-gradient(180deg,var(--accent),transparent);}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+
+  /* ---------- scroll animation ---------- */
+  .scroll-animation{position:relative; height:350vh;}
+  .scroll-animation__sticky{position:sticky; top:0; height:100vh; width:100%; overflow:hidden; background:#000;}
+  #frameCanvas{position:absolute; inset:0; width:100%; height:100%; display:block;}
+  .scroll-animation__veil{position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0.25),transparent 25%,transparent 70%,rgba(0,0,0,0.35)); pointer-events:none;}
+
+  .annotation-card{
+    position:absolute; z-index:5; max-width:300px; padding:22px 24px;
+    background:rgba(255,255,255,0.85); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.5); border-radius:var(--radius-lg);
+    box-shadow:0 20px 50px rgba(20,10,16,0.22);
+    opacity:0; transform:translateY(22px); transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+    pointer-events:none;
+  }
+  .annotation-card.visible{opacity:1; transform:translateY(0);}
+  .annotation-num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent-dark); letter-spacing:.1em;}
+  .annotation-card h3{font-size:19px; margin:8px 0 8px;}
+  .annotation-card p{font-size:14px; color:var(--text-muted);}
+
+  .annotation-card--1{top:16%; left:7%;}
+  .annotation-card--2{top:62%; right:7%;}
+  .annotation-card--3{top:18%; right:7%;}
+  .annotation-card--4{bottom:12%; left:7%;}
+
+  /* ---------- specs ---------- */
+  .specs{padding:120px 0 100px;}
+  .specs-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--surface-border); border:1px solid var(--surface-border); border-radius:var(--radius-xl); overflow:hidden;}
+  .spec{background:var(--bg); padding:44px 24px; text-align:center;}
+  .stat-number{font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,4vw,46px); font-weight:700; color:var(--accent-dark); display:inline-block; transition:text-shadow .3s ease;}
+  .stat-number.counting{text-shadow:0 0 22px rgba(var(--accent-rgb),0.45);}
+  .spec-label{margin-top:8px; font-size:13px; color:var(--text-muted); letter-spacing:.02em;}
+
+  /* ---------- features ---------- */
+  .features{padding:40px 0 120px;}
+  .features-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;}
+  .feature-card{
+    background:var(--surface); border:1px solid var(--surface-border); border-radius:var(--radius-lg);
+    padding:30px 26px; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s ease, border-color .3s ease;
+  }
+  .feature-card:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(46,30,38,0.1); border-color:rgba(var(--accent-rgb),0.35);}
+  .feature-icon{width:46px; height:46px; border-radius:14px; background:rgba(var(--accent-rgb),0.12); display:flex; align-items:center; justify-content:center; margin-bottom:18px; font-size:20px;}
+  .feature-card h3{font-size:17px; margin-bottom:8px;}
+  .feature-card p{font-size:14px;}
+
+  /* ---------- cta ---------- */
+  .cta{padding:100px 24px; text-align:center;}
+  .cta-box{
+    max-width:760px; margin:0 auto; padding:70px 40px; border-radius:var(--radius-xl);
+    background:linear-gradient(135deg,var(--accent),var(--accent-dark)); color:#fff; position:relative; overflow:hidden;
+  }
+  .cta-box::before{content:''; position:absolute; width:300px; height:300px; background:rgba(255,255,255,0.14); border-radius:50%; top:-140px; right:-80px;}
+  .cta-box h2{color:#fff; font-size:clamp(26px,4vw,38px); margin-bottom:14px;}
+  .cta-box p{color:rgba(255,255,255,0.85); max-width:440px; margin:0 auto 30px;}
+  .cta-box .btn-primary{background:#fff; color:var(--accent-dark); box-shadow:0 14px 30px rgba(0,0,0,0.18);}
+  .cta-note{margin-top:16px; font-size:12.5px; color:rgba(255,255,255,0.7);}
+
+  /* ---------- testimonials ---------- */
+  .testimonials{padding:20px 0 120px;}
+  .testimonials__track{display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x proximity; cursor:grab; padding:6px 4px 20px; -webkit-overflow-scrolling:touch;}
+  .testimonials__track.dragging{cursor:grabbing; scroll-snap-type:none; user-select:none;}
+  .testimonials__track::-webkit-scrollbar{height:8px;}
+  .testimonial-card{
+    scroll-snap-align:center; flex:0 0 min(340px,82vw); background:var(--surface);
+    border:1px solid var(--surface-border); border-radius:var(--radius-lg); padding:28px 26px;
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  }
+  .testimonial-stars{color:var(--gold); font-size:14px; letter-spacing:2px; margin-bottom:14px;}
+  .testimonial-card p{color:var(--text); font-size:15px; margin-bottom:20px;}
+  .testimonial-author{display:flex; align-items:center; gap:12px;}
+  .testimonial-avatar{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--accent-light),var(--accent)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600; font-size:14px;}
+  .testimonial-author strong{font-size:14px; display:block;}
+  .testimonial-author span{font-size:12px; color:var(--text-muted);}
+
+  /* ---------- card scanner ---------- */
+  .card-scanner{padding:40px 0 130px;}
+  .card3d-wrap{width:min(460px,88vw); aspect-ratio:1.6/1; margin:50px auto 0; touch-action:none;}
+  .card3d-wrap canvas{width:100%!important; height:100%!important; display:block;}
+  .card3d-hint{text-align:center; margin-top:18px; font-size:12.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; letter-spacing:.05em;}
+
+  /* ---------- footer ---------- */
+  footer{padding:70px 24px 40px; border-top:1px solid var(--surface-border);}
+  .footer-grid{display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px; max-width:var(--container); margin:0 auto 50px;}
+  .footer-brand{display:flex; align-items:center; gap:12px;}
+  .footer-brand img{width:46px; height:46px; border-radius:13px; object-fit:cover;}
+  .footer-brand strong{display:block; font-family:'Space Grotesk',sans-serif; font-size:15px;}
+  .footer-brand span{font-size:12.5px; color:var(--text-muted);}
+  .footer-col h4{font-size:13px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px; color:var(--text-muted);}
+  .footer-col a, .footer-col p{display:block; font-size:14px; color:var(--text); opacity:.85; margin-bottom:10px;}
+  .footer-col a:hover{opacity:1; color:var(--accent-dark);}
+  .footer-bottom{max-width:var(--container); margin:0 auto; padding-top:26px; border-top:1px solid var(--surface-border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12.5px; color:var(--text-muted);}
+
+  /* ---------- confetti ---------- */
+  .confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:400;}
+
+  /* ========== Mobile / responsive ========== */
+  @media (max-width:1024px){
+    .scroll-animation{height:300vh;}
+  }
+  @media (max-width:768px){
+    .nav-links{display:none;}
+    .nav-menu-group{gap:0;}
+    .specs-grid{grid-template-columns:repeat(2,1fr);}
+    .annotation-card{
+      max-width:none; width:calc(100% - 32px); left:16px!important; right:16px!important; top:auto!important; bottom:2vh;
+      padding:12px 16px; display:flex; align-items:center; gap:12px; border-radius:16px;
+    }
+    .annotation-card p, .annotation-card .annotation-stat{display:none;}
+    .annotation-card h3{font-size:14.5px; margin:0;}
+    .annotation-num{font-size:11px;}
+  }
+  @media (max-width:640px){
+    .scroll-animation{height:250vh;}
+    .features-grid{grid-template-columns:1fr;}
+    .hero{padding:120px 20px 80px;}
+    .cta-box{padding:50px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<div id="loader">
+  <div class="loader-logo"><img src="assets/logo.jpg" alt="Dr. Sabrina Pets Clinic"></div>
+  <div class="loader-text">Dr. Sabrina Pets Clinic</div>
+  <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderBarFill"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<div id="scrollProgress"></div>
+
+<nav class="navbar" id="navbar">
+  <a href="#top" class="nav-brand">
+    <img src="assets/logo.jpg" alt="Dr. Sabrina Pets Clinic logo">
+    <span>Dr. Sabrina</span>
+  </a>
+  <div class="nav-menu-group">
+    <div class="nav-links">
+      <a href="#features">Services</a>
+      <a href="#testimonials">Stories</a>
+      <a href="#cardScanner">Patient Card</a>
+    </div>
+    <a href="#cta" class="nav-cta">Book a Visit</a>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero__grid"></div>
+  <div class="hero__orb hero__orb--1"></div>
+  <div class="hero__orb hero__orb--2"></div>
+  <div class="hero__orb hero__orb--3"></div>
+  <div class="hero-content" id="heroContent">
+    <span class="eyebrow">Dr. Sabrina Pets Clinic · Irbid</span>
+    <h1>The clinic Irbid's cats <em>actually</em> trust</h1>
+    <p class="lead">Gentle checkups, full diagnostics, and a team that knows every patient by name — Dr. Sabrina and her clinic treat every cat (and the occasional dog) like family.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn btn-primary">Book a Visit</a>
+      <a href="#features" class="btn btn-secondary">See Our Services</a>
+    </div>
+  </div>
+  <a href="#scrollAnim" class="scroll-hint">
+    <span>Scroll to meet a patient</span>
+    <span class="line"></span>
+  </a>
+</section>
+
+<section class="scroll-animation" id="scrollAnim">
+  <div class="scroll-animation__sticky">
+    <canvas id="frameCanvas"></canvas>
+    <div class="scroll-animation__veil"></div>
+
+    <div class="annotation-card annotation-card--1" data-show="0.04" data-hide="0.27">
+      <span class="annotation-num">01</span>
+      <h3>Every visit starts calm</h3>
+      <p>No rushed exam tables. Every cat gets a moment to settle in before anything else happens.</p>
+    </div>
+
+    <div class="annotation-card annotation-card--2" data-show="0.29" data-hide="0.50">
+      <span class="annotation-num">02</span>
+      <h3>Eyes that miss nothing</h3>
+      <p>On-site bloodwork, imaging, and dental checks — so small issues don't become big ones.</p>
+    </div>
+
+    <div class="annotation-card annotation-card--3" data-show="0.52" data-hide="0.73">
+      <span class="annotation-num">03</span>
+      <h3>Hands-on, always</h3>
+      <p>Vaccination, surgery, grooming, emergencies — Dr. Sabrina is personally involved in every case.</p>
+    </div>
+
+    <div class="annotation-card annotation-card--4" data-show="0.75" data-hide="0.98">
+      <span class="annotation-num">04</span>
+      <h3>She's looking right at you</h3>
+      <p>Because that's how every patient is treated here — like the only one in the room.</p>
+    </div>
+  </div>
+</section>
+
+<section class="specs" id="specs">
+  <div class="container">
+    <div class="specs-grid">
+      <div class="spec"><div class="stat-number" data-target="9" data-suffix="+">0</div><div class="spec-label">Years Caring for Irbid's Pets</div></div>
+      <div class="spec"><div class="stat-number" data-target="4000" data-suffix="+">0</div><div class="spec-label">Cats &amp; Pets Treated</div></div>
+      <div class="spec"><div class="stat-number" data-target="98" data-suffix="%">0</div><div class="spec-label">Happy Pet Parents</div></div>
+      <div class="spec"><div class="stat-number" data-target="7" data-suffix="">0</div><div class="spec-label">Days a Week Open</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Services</span>
+      <h2>Built around how cats actually feel</h2>
+      <p>A full range of care, led by a cat-first approach — and just as welcoming to dogs and other family pets.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal"><div class="feature-icon">🐾</div><h3>Cat Wellness &amp; Checkups</h3><p>Routine exams designed around feline behavior, not against it.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">💉</div><h3>Vaccination</h3><p>Core and lifestyle vaccines on a schedule that fits your cat.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🦷</div><h3>Dentistry</h3><p>Cleanings and treatment before small problems turn painful.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🩻</div><h3>Diagnostic Imaging</h3><p>On-site X-ray and ultrasound for fast, accurate answers.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">✂️</div><h3>Grooming</h3><p>Calm, low-stress grooming for cats who'd rather be anywhere else.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🐶</div><h3>General Consultation</h3><p>For dogs and other pets too — the whole family is welcome.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🚑</div><h3>Emergency Care</h3><p>Urgent cases seen with priority, no appointment required.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🔬</div><h3>Laboratory Testing</h3><p>In-house bloodwork and lab results without the long wait.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="cta-box reveal">
+    <h2>Ready when your cat is</h2>
+    <p>Book an appointment with Dr. Sabrina's team in Irbid — new patients usually seen within the week.</p>
+    <button class="btn btn-primary" id="ctaButton">Book a Visit</button>
+    <div class="cta-note">Online booking is on its way — for now, reach the clinic directly to schedule.</div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Pet Parents Say</span>
+      <h2>Stories from the waiting room</h2>
+    </div>
+  </div>
+  <div class="container">
+    <div class="testimonials__track" id="testimonialsTrack">
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p>"My cat hates car rides, let alone vets — but she was purring on the table within five minutes. I still don't know how Dr. Sabrina does it."</p><div class="testimonial-author"><div class="testimonial-avatar">L</div><div><strong>Lina K.</strong><span>Cat parent, Irbid</span></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p>"We found a lump on our cat on a Thursday night and they saw us within the hour. That kind of care is rare."</p><div class="testimonial-author"><div class="testimonial-avatar">O</div><div><strong>Omar H.</strong><span>Cat parent, Irbid</span></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p>"Three cats, three completely different personalities, and the whole team knows each one by name."</p><div class="testimonial-author"><div class="testimonial-avatar">R</div><div><strong>Rana A.</strong><span>Cat parent, Irbid</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="card-scanner" id="cardScanner">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Patient Care</span>
+      <h2>Every cat gets a card</h2>
+      <p>A simple profile for every patient — from the first checkup to every visit after.</p>
+    </div>
+  </div>
+  <div class="card3d-wrap" id="card3d"></div>
+  <div class="card3d-hint">Move your cursor over the card</div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img src="assets/logo.jpg" alt="Dr. Sabrina Pets Clinic logo">
+        <div><strong>Dr. Sabrina Pets Clinic</strong><span>Irbid, Jordan</span></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#features">Services</a>
+      <a href="#testimonials">Stories</a>
+      <a href="#cardScanner">Patient Card</a>
+    </div>
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <p>Prince Hassan St. area, Irbid, Jordan</p>
+      <a href="#cta">Book a Visit</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Dr. Sabrina Pets Clinic</span>
+    <span>Made for Irbid's cats, mostly.</span>
+  </div>
+</footer>
+
+<script type="module">
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+const TOTAL_FRAMES = 96;
+const frames = new Array(TOTAL_FRAMES);
+let loadedCount = 0;
+
+const loader = document.getElementById('loader');
+const loaderBarFill = document.getElementById('loaderBarFill');
+const loaderPct = document.getElementById('loaderPct');
+const heroContent = document.getElementById('heroContent');
+
+function frameSrc(i){
+  return `frames/frame_${String(i + 1).padStart(4, '0')}.jpg`;
+}
+
+function preloadFrames(){
+  return new Promise((resolve) => {
+    for (let i = 0; i < TOTAL_FRAMES; i++){
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        loadedCount++;
+        const pct = loadedCount / TOTAL_FRAMES;
+        loaderBarFill.style.width = (pct * 100) + '%';
+        loaderPct.textContent = Math.round(pct * 100) + '%';
+        if (loadedCount === TOTAL_FRAMES) resolve();
+      };
+      img.src = frameSrc(i);
+      frames[i] = img;
+    }
+  });
+}
+
+/* ---------------- frame-sequence canvas ---------------- */
+const canvas = document.getElementById('frameCanvas');
+const ctx = canvas.getContext('2d');
+let isMobile = window.innerWidth <= 768;
+
+function sizeFrameCanvas(){
+  const sticky = canvas.parentElement;
+  const rect = sticky.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+let currentFrameIndex = -1;
+function drawFrame(img){
+  if (!img || !img.complete || img.naturalWidth === 0) return;
+  const dpr = window.devicePixelRatio || 1;
+  const cw = canvas.width / dpr;
+  const ch = canvas.height / dpr;
+  const iw = img.naturalWidth;
+  const ih = img.naturalHeight;
+  const baseScale = isMobile
+    ? Math.min(cw / iw, ch / ih) * 1.28
+    : Math.max(cw / iw, ch / ih);
+  const sw = iw * baseScale;
+  const sh = ih * baseScale;
+  const dx = (cw - sw) / 2;
+  const dy = (ch - sh) / 2;
+  ctx.clearRect(0, 0, cw, ch);
+  ctx.drawImage(img, dx, dy, sw, sh);
+}
+
+function updateFrame(progress){
+  const idx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(progress * TOTAL_FRAMES)));
+  if (idx !== currentFrameIndex && frames[idx]){
+    currentFrameIndex = idx;
+    drawFrame(frames[idx]);
+  }
+}
+
+/* ---------------- scroll-driven state ---------------- */
+const scrollAnimEl = document.getElementById('scrollAnim');
+const navbar = document.getElementById('navbar');
+const scrollProgressEl = document.getElementById('scrollProgress');
+const annotationCards = Array.from(document.querySelectorAll('.annotation-card'));
+
+const SNAP_POINTS = [0.155, 0.395, 0.625, 0.865];
+const SNAP_EPSILON = 0.012;
+const SNAP_RESET = 0.03;
+const HOLD_DURATION = 600;
+let snapLocked = false;
+const snappedFlags = SNAP_POINTS.map(() => false);
+
+function getSectionProgress(){
+  const rect = scrollAnimEl.getBoundingClientRect();
+  const total = scrollAnimEl.offsetHeight - window.innerHeight;
+  if (total <= 0) return 0;
+  const scrolled = -rect.top;
+  return Math.min(1, Math.max(0, scrolled / total));
+}
+
+function updateAnnotations(progress){
+  annotationCards.forEach((card) => {
+    const show = parseFloat(card.dataset.show);
+    const hide = parseFloat(card.dataset.hide);
+    const visible = progress >= show && progress <= hide;
+    card.classList.toggle('visible', visible);
+  });
+}
+
+function checkSnap(progress){
+  if (snapLocked) return;
+  for (let i = 0; i < SNAP_POINTS.length; i++){
+    const sp = SNAP_POINTS[i];
+    const dist = Math.abs(progress - sp);
+    if (!snappedFlags[i] && dist < SNAP_EPSILON){
+      snappedFlags[i] = true;
+      triggerSnap(sp);
+      break;
+    }
+    if (dist > SNAP_RESET){
+      snappedFlags[i] = false;
+    }
+  }
+}
+
+function triggerSnap(sp){
+  snapLocked = true;
+  const total = scrollAnimEl.offsetHeight - window.innerHeight;
+  const targetY = scrollAnimEl.offsetTop + sp * total;
+  window.scrollTo(0, targetY);
+  setTimeout(() => { snapLocked = false; }, HOLD_DURATION);
+}
+
+window.addEventListener('wheel', (e) => { if (snapLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', (e) => { if (snapLocked) e.preventDefault(); }, { passive: false });
+
+let ticking = false;
+function onScroll(){
+  if (!ticking){
+    requestAnimationFrame(handleScroll);
+    ticking = true;
+  }
+}
+
+function handleScroll(){
+  ticking = false;
+  const scrollY = window.scrollY;
+  navbar.classList.toggle('scrolled', scrollY > 60);
+
+  const pageMax = document.documentElement.scrollHeight - window.innerHeight;
+  scrollProgressEl.style.width = (pageMax > 0 ? (scrollY / pageMax) * 100 : 0) + '%';
+
+  const progress = getSectionProgress();
+  updateFrame(progress);
+  updateAnnotations(progress);
+  checkSnap(progress);
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', () => {
+  isMobile = window.innerWidth <= 768;
+  sizeFrameCanvas();
+  if (frames[currentFrameIndex]) drawFrame(frames[currentFrameIndex]);
+});
+
+/* ---------------- count-up specs ---------------- */
+function easeOutExpo(t){ return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+
+function animateCount(el, target, suffix){
+  el.classList.add('counting');
+  const start = performance.now();
+  const duration = 1500;
+  function tick(now){
+    const t = Math.min(1, (now - start) / duration);
+    const eased = easeOutExpo(t);
+    const current = Math.floor(eased * target);
+    el.textContent = current.toLocaleString() + suffix;
+    if (t < 1){
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = target.toLocaleString() + suffix;
+      el.classList.remove('counting');
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+const specsObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting){
+      document.querySelectorAll('.stat-number').forEach((el, i) => {
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        setTimeout(() => animateCount(el, target, suffix), i * 200);
+      });
+      specsObserver.disconnect();
+    }
+  });
+}, { threshold: 0.4 });
+const specsSection = document.getElementById('specs');
+if (specsSection) specsObserver.observe(specsSection);
+
+/* ---------------- generic reveal-on-scroll ---------------- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+/* ---------------- background particle drift ---------------- */
+const bgCanvas = document.getElementById('bgCanvas');
+const bgCtx = bgCanvas.getContext('2d');
+let dots = [];
+
+function sizeBgCanvas(){
+  const dpr = window.devicePixelRatio || 1;
+  bgCanvas.width = window.innerWidth * dpr;
+  bgCanvas.height = window.innerHeight * dpr;
+  bgCanvas.style.width = window.innerWidth + 'px';
+  bgCanvas.style.height = window.innerHeight + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function initDots(){
+  const count = window.innerWidth < 640 ? 70 : 130;
+  dots = Array.from({ length: count }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    r: Math.random() * 1.6 + 0.6,
+    vx: (Math.random() - 0.5) * 0.12,
+    vy: (Math.random() - 0.5) * 0.12,
+    phase: Math.random() * Math.PI * 2,
+    speed: Math.random() * 0.0015 + 0.0006
+  }));
+}
+
+function drawBg(ts){
+  bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  dots.forEach((d) => {
+    d.x += d.vx; d.y += d.vy;
+    if (d.x < 0) d.x = window.innerWidth;
+    if (d.x > window.innerWidth) d.x = 0;
+    if (d.y < 0) d.y = window.innerHeight;
+    if (d.y > window.innerHeight) d.y = 0;
+    const tw = 0.3 + 0.35 * Math.sin(ts * d.speed + d.phase);
+    bgCtx.beginPath();
+    bgCtx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    bgCtx.fillStyle = `rgba(232,99,127,${tw.toFixed(3)})`;
+    bgCtx.fill();
+  });
+  requestAnimationFrame(drawBg);
+}
+
+sizeBgCanvas();
+initDots();
+requestAnimationFrame(drawBg);
+window.addEventListener('resize', () => { sizeBgCanvas(); initDots(); });
+
+/* ---------------- testimonials drag-to-scroll ---------------- */
+const track = document.getElementById('testimonialsTrack');
+let isDown = false, startX = 0, scrollLeftStart = 0;
+track.addEventListener('pointerdown', (e) => {
+  isDown = true;
+  track.setPointerCapture(e.pointerId);
+  startX = e.clientX;
+  scrollLeftStart = track.scrollLeft;
+  track.classList.add('dragging');
+});
+track.addEventListener('pointermove', (e) => {
+  if (!isDown) return;
+  track.scrollLeft = scrollLeftStart - (e.clientX - startX);
+});
+['pointerup', 'pointercancel', 'pointerleave'].forEach((evt) => {
+  track.addEventListener(evt, () => { isDown = false; track.classList.remove('dragging'); });
+});
+
+/* ---------------- confetti burst ---------------- */
+function burstConfetti(originX, originY){
+  const confettiCanvas = document.createElement('canvas');
+  confettiCanvas.className = 'confetti-canvas';
+  document.body.appendChild(confettiCanvas);
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+  const cctx = confettiCanvas.getContext('2d');
+  const colors = ['#E8637F', '#F4A5B8', '#F0B429', '#2E3A8C', '#FFFFFF'];
+  const particles = Array.from({ length: 140 }, () => ({
+    x: originX, y: originY,
+    vx: (Math.random() - 0.5) * 14,
+    vy: Math.random() * -14 - 4,
+    size: Math.random() * 6 + 4,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * Math.PI * 2,
+    vrot: (Math.random() - 0.5) * 0.3,
+    life: 1
+  }));
+  let start = null;
+  function frame(ts){
+    if (!start) start = ts;
+    const elapsed = ts - start;
+    cctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    particles.forEach((p) => {
+      p.vy += 0.35; p.x += p.vx; p.y += p.vy; p.rot += p.vrot; p.life -= 0.008;
+      cctx.save();
+      cctx.globalAlpha = Math.max(p.life, 0);
+      cctx.translate(p.x, p.y);
+      cctx.rotate(p.rot);
+      cctx.fillStyle = p.color;
+      cctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      cctx.restore();
+    });
+    if (elapsed < 2200){
+      requestAnimationFrame(frame);
+    } else {
+      confettiCanvas.remove();
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+document.getElementById('ctaButton').addEventListener('click', (e) => {
+  burstConfetti(e.clientX, e.clientY);
+});
+
+/* ---------------- Three.js patient card ---------------- */
+function roundRect(c, x, y, w, h, r){
+  c.beginPath();
+  c.moveTo(x + r, y);
+  c.arcTo(x + w, y, x + w, y + h, r);
+  c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r);
+  c.arcTo(x, y, x + w, y, r);
+  c.closePath();
+}
+
+function buildCardTextures(logoImg){
+  const front = document.createElement('canvas');
+  front.width = 860; front.height = 540;
+  const fctx = front.getContext('2d');
+  const fg = fctx.createLinearGradient(0, 0, 860, 540);
+  fg.addColorStop(0, '#FFFFFF'); fg.addColorStop(1, '#FDEFF2');
+  fctx.fillStyle = fg; roundRect(fctx, 0, 0, 860, 540, 46); fctx.fill();
+  fctx.strokeStyle = 'rgba(201,74,100,0.35)'; fctx.lineWidth = 4;
+  roundRect(fctx, 4, 4, 852, 532, 44); fctx.stroke();
+  if (logoImg) fctx.drawImage(logoImg, 48, 50, 230, 230);
+  fctx.fillStyle = '#C94A64'; fctx.font = '700 52px "Space Grotesk", sans-serif';
+  fctx.fillText('DR. SABRINA', 308, 150);
+  fctx.fillStyle = '#7A6B72'; fctx.font = '500 28px Archivo, sans-serif';
+  fctx.fillText('PETS CLINIC · IRBID', 308, 194);
+  fctx.fillStyle = '#B98E98'; fctx.font = '500 22px "JetBrains Mono", monospace';
+  fctx.fillText('PATIENT CARE CARD', 308, 420);
+  fctx.fillStyle = '#2E3A8C'; fctx.font = '600 22px "JetBrains Mono", monospace';
+  fctx.fillText('No. 00124', 308, 458);
+
+  const back = document.createElement('canvas');
+  back.width = 860; back.height = 540;
+  const bctx = back.getContext('2d');
+  const bg = bctx.createLinearGradient(0, 0, 860, 540);
+  bg.addColorStop(0, '#E8637F'); bg.addColorStop(1, '#C94A64');
+  bctx.fillStyle = bg; roundRect(bctx, 0, 0, 860, 540, 46); bctx.fill();
+  bctx.fillStyle = 'rgba(46,30,38,0.75)'; bctx.fillRect(0, 95, 860, 86);
+  bctx.fillStyle = '#FFFFFF'; bctx.font = '700 38px "Space Grotesk", sans-serif'; bctx.textAlign = 'center';
+  bctx.fillText('DR. SABRINA PETS CLINIC', 430, 300);
+  bctx.fillStyle = 'rgba(255,255,255,0.85)'; bctx.font = '500 24px Archivo, sans-serif';
+  bctx.fillText('Irbid, Jordan', 430, 342);
+  bctx.textAlign = 'left';
+
+  return [new THREE.CanvasTexture(front), new THREE.CanvasTexture(back)];
+}
+
+function initCardScanner(){
+  const container = document.getElementById('card3d');
+  if (!container) return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 0, 5);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+  const key = new THREE.DirectionalLight(0xffffff, 0.8);
+  key.position.set(2, 3, 4);
+  scene.add(key);
+  const rim = new THREE.PointLight(0xE8637F, 1.3, 10);
+  rim.position.set(-3, -1, 2);
+  scene.add(rim);
+
+  const particleCount = 90;
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++){
+    positions[i * 3] = (Math.random() - 0.5) * 8;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 5;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 4 - 1;
+  }
+  const particleGeo = new THREE.BufferGeometry();
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({ color: 0xF4A5B8, size: 0.035, transparent: true, opacity: 0.6 });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  function buildCard(logoImg){
+    const [frontTex, backTex] = buildCardTextures(logoImg);
+    const geo = new THREE.BoxGeometry(2.6, 1.6, 0.04);
+    const edgeMat = new THREE.MeshStandardMaterial({ color: 0xF6DDE3, roughness: 0.5 });
+    const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.4 });
+    const backMat = new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.4 });
+    const card = new THREE.Mesh(geo, [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat]);
+    group.add(card);
+  }
+
+  const logoImg = new Image();
+  logoImg.onload = () => buildCard(logoImg);
+  logoImg.onerror = () => buildCard(null);
+  logoImg.src = 'assets/logo.jpg';
+
+  let targetRotY = 0, targetRotX = 0, currentRotY = 0, currentRotX = 0;
+  container.addEventListener('pointermove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    targetRotY = nx * 0.5;
+    targetRotX = -ny * 0.3;
+  });
+  container.addEventListener('pointerleave', () => { targetRotY = 0; targetRotX = 0; });
+
+  function animate(ts){
+    requestAnimationFrame(animate);
+    currentRotY += (targetRotY - currentRotY) * 0.06;
+    currentRotX += (targetRotX - currentRotX) * 0.06;
+    group.rotation.y = ts * 0.00015 + currentRotY;
+    group.rotation.x = currentRotX;
+    particles.rotation.y = ts * 0.00005;
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(animate);
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+}
+
+/* ---------------- boot ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  sizeFrameCanvas();
+  initCardScanner();
+
+  preloadFrames().then(() => {
+    drawFrame(frames[0]);
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      heroContent.classList.add('in');
+    }, 250);
+  });
+});
+</script>
+</body>
+</html>
