@@ -244,6 +244,15 @@
   .card3d-wrap canvas{width:100%!important; height:100%!important; display:block;}
   .card3d-hint{text-align:center; margin-top:18px; font-size:12.5px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; letter-spacing:.05em;}
 
+  /* ---------- location ---------- */
+  .location{padding:40px 0 120px;}
+  .location-map{
+    max-width:900px; margin:0 auto; aspect-ratio:16/9; border-radius:var(--radius-xl);
+    overflow:hidden; border:1px solid var(--surface-border); box-shadow:0 20px 50px rgba(46,30,38,0.1);
+  }
+  .location-map iframe{width:100%; height:100%; border:0; display:block;}
+  .location-actions{text-align:center; margin-top:28px;}
+
   /* ---------- footer ---------- */
   footer{padding:70px 24px 40px; border-top:1px solid var(--surface-border);}
   .footer-grid{display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px; max-width:var(--container); margin:0 auto 50px;}
@@ -281,6 +290,7 @@
     .features-grid{grid-template-columns:1fr;}
     .hero{padding:120px 20px 80px;}
     .cta-box{padding:50px 24px;}
+    .location-map{aspect-ratio:1/1;}
   }
 </style>
 </head>
@@ -307,6 +317,7 @@
       <a href="#features" data-i18n="navServices">Services</a>
       <a href="#testimonials" data-i18n="navStories">Stories</a>
       <a href="#cardScanner" data-i18n="navPatientCard">Patient Card</a>
+      <a href="#location" data-i18n="navLocation">Location</a>
     </div>
     <button class="lang-toggle" id="langToggle" type="button">AR</button>
     <a href="https://wa.me/962795399513" target="_blank" rel="noopener" class="nav-cta" data-i18n="navBookVisit">Book a Visit</a>
@@ -432,6 +443,22 @@
   <div class="card3d-hint" data-i18n="cardScannerHint">Move your cursor over the card</div>
 </section>
 
+<section class="location" id="location">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="locationEyebrow">Find Us</span>
+      <h2 data-i18n="locationTitle">Visit the Clinic in Irbid</h2>
+      <p data-i18n="locationDesc">Prince Hassan St. area, Irbid, Jordan — drop by, or get directions below.</p>
+    </div>
+    <div class="location-map reveal">
+      <iframe src="https://www.google.com/maps?q=32.538443,35.872315&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Dr. Sabrina Pets Clinic location"></iframe>
+    </div>
+    <div class="location-actions">
+      <a href="https://www.google.com/maps/dir/?api=1&destination=32.538443,35.872315" target="_blank" rel="noopener" class="btn btn-secondary" data-i18n="locationDirections">Get Directions</a>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-grid">
     <div>
@@ -445,6 +472,7 @@
       <a href="#features" data-i18n="navServices">Services</a>
       <a href="#testimonials" data-i18n="navStories">Stories</a>
       <a href="#cardScanner" data-i18n="navPatientCard">Patient Card</a>
+      <a href="#location" data-i18n="navLocation">Location</a>
     </div>
     <div class="footer-col">
       <h4 data-i18n="footerVisitHeading">Visit</h4>
@@ -476,6 +504,7 @@ const TRANSLATIONS = {
     navServices: "Services",
     navStories: "Stories",
     navPatientCard: "Patient Card",
+    navLocation: "Location",
     navBookVisit: "Book a Visit",
     heroEyebrow: "Dr. Sabrina Pets Clinic · Irbid",
     heroTitle: "The clinic Irbid's cats <em>actually</em> trust",
@@ -522,6 +551,10 @@ const TRANSLATIONS = {
     cardScannerTitle: "Every cat gets a card",
     cardScannerDesc: "A simple profile for every patient — from the first checkup to every visit after.",
     cardScannerHint: "Move your cursor over the card",
+    locationEyebrow: "Find Us",
+    locationTitle: "Visit the Clinic in Irbid",
+    locationDesc: "Prince Hassan St. area, Irbid, Jordan — drop by, or get directions below.",
+    locationDirections: "Get Directions",
     footerTagline: "Irbid, Jordan",
     footerExploreHeading: "Explore",
     footerVisitHeading: "Visit",
@@ -539,6 +572,7 @@ const TRANSLATIONS = {
     navServices: "الخدمات",
     navStories: "آراء العملاء",
     navPatientCard: "بطاقة المريض",
+    navLocation: "الموقع",
     navBookVisit: "احجز موعد",
     heroEyebrow: "عيادة د. صبرين للحيوانات الأليفة · إربد",
     heroTitle: "العيادة اللي قطط إربد بتثق فيها <em>فعلاً</em>",
@@ -585,6 +619,10 @@ const TRANSLATIONS = {
     cardScannerTitle: "كل قطة إلها بطاقة خاصة فيها",
     cardScannerDesc: "ملف بسيط لكل مريض — من أول كشف لكل زيارة بعدها.",
     cardScannerHint: "حرك الماوس فوق البطاقة",
+    locationEyebrow: "موقعنا",
+    locationTitle: "زوروا العيادة بإربد",
+    locationDesc: "منطقة شارع الأمير حسن، إربد، الأردن — تعالوا زورونا، أو خذوا الاتجاهات من تحت.",
+    locationDirections: "احصل على الاتجاهات",
     footerTagline: "إربد، الأردن",
     footerExploreHeading: "تصفح",
     footerVisitHeading: "زورونا",
