@@ -166,7 +166,7 @@
 
   /* ---------- scroll animation ---------- */
   .scroll-animation{position:relative; height:350vh;}
-  .scroll-animation__sticky{position:sticky; top:0; height:100vh; width:100%; overflow:hidden; background:#000;}
+  .scroll-animation__sticky{position:sticky; top:0; height:100vh; width:100%; overflow:hidden; background:var(--bg);}
   #frameCanvas{position:absolute; inset:0; width:100%; height:100%; display:block;}
   .scroll-animation__veil{position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0.25),transparent 25%,transparent 70%,rgba(0,0,0,0.35)); pointer-events:none;}
 
@@ -195,6 +195,18 @@
   .stat-number{font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,4vw,46px); font-weight:700; color:var(--accent-dark); display:inline-block; transition:text-shadow .3s ease;}
   .stat-number.counting{text-shadow:0 0 22px rgba(var(--accent-rgb),0.45);}
   .spec-label{margin-top:8px; font-size:13px; color:var(--text-muted); letter-spacing:.02em;}
+
+  /* ---------- about ---------- */
+  .about{padding:40px 0 100px;}
+  .about-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:center;}
+  .about-image{
+    border-radius:var(--radius-xl); overflow:hidden; aspect-ratio:4/5;
+    box-shadow:0 20px 50px rgba(46,30,38,0.12); border:1px solid var(--surface-border);
+  }
+  .about-image img{width:100%; height:100%; object-fit:cover; display:block;}
+  .about-text .eyebrow{margin-bottom:10px; display:inline-block;}
+  .about-text h2{font-size:clamp(26px,3.6vw,36px); margin-bottom:14px;}
+  .about-text p{margin-top:12px; font-size:15.5px; color:var(--text); max-width:480px;}
 
   /* ---------- features ---------- */
   .features{padding:40px 0 120px;}
@@ -291,6 +303,9 @@
     .hero{padding:120px 20px 80px;}
     .cta-box{padding:50px 24px;}
     .location-map{aspect-ratio:1/1;}
+    .about-grid{grid-template-columns:1fr; gap:28px; text-align:center;}
+    .about-image{max-width:280px; margin:0 auto;}
+    .about-text p{margin-left:auto; margin-right:auto;}
   }
 </style>
 </head>
@@ -314,6 +329,7 @@
   </a>
   <div class="nav-menu-group">
     <div class="nav-links">
+      <a href="#about" data-i18n="navAbout">About</a>
       <a href="#features" data-i18n="navServices">Services</a>
       <a href="#testimonials" data-i18n="navStories">Stories</a>
       <a href="#cardScanner" data-i18n="navPatientCard">Patient Card</a>
@@ -371,6 +387,22 @@
       <span class="annotation-num">04</span>
       <h3 data-i18n="card4Title">Comfortable, start to finish</h3>
       <p data-i18n="card4Desc">That's the kind of attention every patient gets at the clinic.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image reveal">
+        <img src="assets/logo.jpg" alt="Dr. Sabrina">
+      </div>
+      <div class="about-text reveal">
+        <span class="eyebrow" data-i18n="aboutEyebrow">Meet Your Vet</span>
+        <h2 data-i18n="aboutTitle">Dr. Sabrina</h2>
+        <p data-i18n="aboutDesc1">Dr. Sabrina studied veterinary medicine because she's always been drawn to animals, not just to the science of treating them. That's stayed the same since she opened the clinic in Irbid.</p>
+        <p data-i18n="aboutDesc2">She's still personally involved in almost every case that comes through the door, whether it's a routine checkup or something more serious, and she treats every animal with the same patience, cats included.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -469,6 +501,7 @@
     </div>
     <div class="footer-col">
       <h4 data-i18n="footerExploreHeading">Explore</h4>
+      <a href="#about" data-i18n="navAbout">About</a>
       <a href="#features" data-i18n="navServices">Services</a>
       <a href="#testimonials" data-i18n="navStories">Stories</a>
       <a href="#cardScanner" data-i18n="navPatientCard">Patient Card</a>
@@ -501,6 +534,7 @@ const TRANSLATIONS = {
     metaDescription: "Dr. Sabrina Pets Clinic, a trusted veterinary clinic in Irbid offering calm, attentive care for cats and other pets.",
     loaderText: "Dr. Sabrina Pets Clinic",
     navBrand: "Dr. Sabrina",
+    navAbout: "About",
     navServices: "Services",
     navStories: "Stories",
     navPatientCard: "Patient Card",
@@ -520,6 +554,10 @@ const TRANSLATIONS = {
     card3Desc: "Vaccination, surgery, grooming, emergencies. Dr. Sabrina is personally involved in every case.",
     card4Title: "Comfortable, start to finish",
     card4Desc: "That's the kind of attention every patient gets at the clinic.",
+    aboutEyebrow: "Meet Your Vet",
+    aboutTitle: "Dr. Sabrina",
+    aboutDesc1: "Dr. Sabrina studied veterinary medicine because she's always been drawn to animals, not just to the science of treating them. That's stayed the same since she opened the clinic in Irbid.",
+    aboutDesc2: "She's still personally involved in almost every case that comes through the door, whether it's a routine checkup or something more serious, and she treats every animal with the same patience, cats included.",
     specLabel1: "Years Caring for Irbid's Pets",
     specLabel2: "Pets Treated",
     specLabel3: "Happy Pet Parents",
@@ -569,6 +607,7 @@ const TRANSLATIONS = {
     metaDescription: "عيادة د. صبرين للحيوانات الأليفة في إربد، تقدم عناية هادئة ومتكاملة لكل أنواع الحيوانات الأليفة.",
     loaderText: "عيادة د. صبرين للحيوانات الأليفة",
     navBrand: "د. صبرين",
+    navAbout: "عن الدكتورة",
     navServices: "الخدمات",
     navStories: "آراء العملاء",
     navPatientCard: "بطاقة المريض",
@@ -588,6 +627,10 @@ const TRANSLATIONS = {
     card3Desc: "تطعيم، عمليات، تنظيف، وحالات طارئة. د. صبرين متابعة بنفسها كل حالة.",
     card4Title: "مرتاحة من أول لحظة لآخرها",
     card4Desc: "وهاد هو مستوى الاهتمام يلي كل مريض بياخده بالعيادة.",
+    aboutEyebrow: "تعرّف على طبيبتك",
+    aboutTitle: "د. صبرين",
+    aboutDesc1: "درست د. صبرين الطب البيطري لأنها دايماً كانت مرتبطة بالحيوانات، مش بس بعلم علاجها. وهاد الشي ما تغيّر من يوم ما فتحت العيادة بإربد.",
+    aboutDesc2: "لسا بتتابع بنفسها تقريباً كل حالة بتدخل العيادة، سواء كان فحص دوري أو حالة أصعب، وبتتعامل مع كل حيوان بنفس الصبر، والقطط من ضمنهم.",
     specLabel1: "سنين بخدمة حيوانات إربد",
     specLabel2: "حيوان تمت معالجته",
     specLabel3: "نسبة رضا أصحاب الحيوانات",
@@ -701,7 +744,6 @@ function preloadFrames(){
 /* ---------------- frame-sequence canvas ---------------- */
 const canvas = document.getElementById('frameCanvas');
 const ctx = canvas.getContext('2d');
-let isMobile = window.innerWidth <= 768;
 
 function sizeFrameCanvas(){
   const sticky = canvas.parentElement;
@@ -720,9 +762,7 @@ function drawFrame(img){
   const ch = canvas.height / dpr;
   const iw = img.naturalWidth;
   const ih = img.naturalHeight;
-  const baseScale = isMobile
-    ? Math.min(cw / iw, ch / ih) * 1.28
-    : Math.max(cw / iw, ch / ih);
+  const baseScale = Math.max(cw / iw, ch / ih);
   const sw = iw * baseScale;
   const sh = ih * baseScale;
   const dx = (cw - sw) / 2;
@@ -820,7 +860,6 @@ function handleScroll(){
 
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', () => {
-  isMobile = window.innerWidth <= 768;
   sizeFrameCanvas();
   if (frames[currentFrameIndex]) drawFrame(frames[currentFrameIndex]);
 });
