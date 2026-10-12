@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23E8637F'/%3E%3Crect x='42' y='24' width='16' height='52' rx='4' fill='white'/%3E%3Crect x='24' y='42' width='52' height='16' rx='4' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --accent:#E8637F;
@@ -44,6 +44,10 @@
   img{max-width:100%; display:block;}
   button{font-family:inherit; border:none; cursor:pointer; background:none;}
   ::selection{background:var(--accent); color:#fff;}
+
+  html[lang="ar"] body{font-family:'Cairo',sans-serif;}
+  html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3,html[lang="ar"] h4{font-family:'Cairo',sans-serif; font-weight:700; letter-spacing:0;}
+  html[lang="ar"] .eyebrow,html[lang="ar"] .loader-text,html[lang="ar"] .loader-pct,html[lang="ar"] .annotation-num,html[lang="ar"] .scroll-hint,html[lang="ar"] .card3d-hint{font-family:'Cairo',sans-serif;}
 
   ::-webkit-scrollbar{width:11px;}
   ::-webkit-scrollbar-track{background:var(--bg-alt);}
@@ -97,7 +101,7 @@
   }
   .navbar.scrolled{
     top:14px; left:50%; transform:translateX(-50%); right:auto;
-    width:min(820px,90%); padding:10px 14px 10px 16px;
+    width:min(860px,92%); padding:10px 14px 10px 16px;
     background:var(--surface-strong); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
     border:1px solid var(--surface-border); border-radius:999px;
     box-shadow:0 10px 32px rgba(46,30,38,0.1);
@@ -106,6 +110,7 @@
   .nav-brand{display:flex; align-items:center; gap:10px;}
   .nav-brand img{width:38px; height:38px; border-radius:11px; object-fit:cover;}
   .nav-brand span{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px;}
+  html[lang="ar"] .nav-brand span{font-family:'Cairo',sans-serif;}
   .nav-links{display:flex; align-items:center; gap:28px; font-size:14px; font-weight:500;}
   .nav-links a{color:var(--text); opacity:0.75; transition:opacity .2s ease;}
   .nav-links a:hover{opacity:1;}
@@ -115,7 +120,13 @@
     box-shadow:0 8px 20px rgba(var(--accent-rgb),0.3);
   }
   .nav-cta:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(var(--accent-rgb),0.4);}
-  .nav-menu-group{display:flex; align-items:center; gap:28px;}
+  .nav-menu-group{display:flex; align-items:center; gap:18px;}
+  .lang-toggle{
+    font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.05em;
+    padding:8px 14px; border-radius:999px; border:1.5px solid rgba(46,30,38,0.18); color:var(--text);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .lang-toggle:hover{border-color:var(--accent); color:var(--accent-dark);}
 
   /* ---------- buttons ---------- */
   .btn{
@@ -160,7 +171,7 @@
   .scroll-animation__veil{position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0.25),transparent 25%,transparent 70%,rgba(0,0,0,0.35)); pointer-events:none;}
 
   .annotation-card{
-    position:absolute; z-index:5; max-width:300px; padding:22px 24px;
+    position:absolute; z-index:5; max-width:300px; padding:22px 24px; text-align:start;
     background:rgba(255,255,255,0.85); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
     border:1px solid rgba(255,255,255,0.5); border-radius:var(--radius-lg);
     box-shadow:0 20px 50px rgba(20,10,16,0.22);
@@ -218,12 +229,12 @@
   .testimonial-card{
     scroll-snap-align:center; flex:0 0 min(340px,82vw); background:var(--surface);
     border:1px solid var(--surface-border); border-radius:var(--radius-lg); padding:28px 26px;
-    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); text-align:start;
   }
   .testimonial-stars{color:var(--gold); font-size:14px; letter-spacing:2px; margin-bottom:14px;}
   .testimonial-card p{color:var(--text); font-size:15px; margin-bottom:20px;}
   .testimonial-author{display:flex; align-items:center; gap:12px;}
-  .testimonial-avatar{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--accent-light),var(--accent)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600; font-size:14px;}
+  .testimonial-avatar{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--accent-light),var(--accent)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600; font-size:14px; flex-shrink:0;}
   .testimonial-author strong{font-size:14px; display:block;}
   .testimonial-author span{font-size:12px; color:var(--text-muted);}
 
@@ -239,6 +250,7 @@
   .footer-brand{display:flex; align-items:center; gap:12px;}
   .footer-brand img{width:46px; height:46px; border-radius:13px; object-fit:cover;}
   .footer-brand strong{display:block; font-family:'Space Grotesk',sans-serif; font-size:15px;}
+  html[lang="ar"] .footer-brand strong{font-family:'Cairo',sans-serif;}
   .footer-brand span{font-size:12.5px; color:var(--text-muted);}
   .footer-col h4{font-size:13px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px; color:var(--text-muted);}
   .footer-col a, .footer-col p{display:block; font-size:14px; color:var(--text); opacity:.85; margin-bottom:10px;}
@@ -254,7 +266,7 @@
   }
   @media (max-width:768px){
     .nav-links{display:none;}
-    .nav-menu-group{gap:0;}
+    .nav-menu-group{gap:10px;}
     .specs-grid{grid-template-columns:repeat(2,1fr);}
     .annotation-card{
       max-width:none; width:calc(100% - 32px); left:16px!important; right:16px!important; top:auto!important; bottom:2vh;
@@ -277,8 +289,8 @@
 <canvas id="bgCanvas"></canvas>
 
 <div id="loader">
-  <div class="loader-logo"><img src="assets/logo.jpg" alt="Dr. Sabrina Pets Clinic"></div>
-  <div class="loader-text">Dr. Sabrina Pets Clinic</div>
+  <div class="loader-logo"><img src="assets/logo-icon.jpg" alt="Dr. Sabrina Pets Clinic"></div>
+  <div class="loader-text" data-i18n="loaderText">Dr. Sabrina Pets Clinic</div>
   <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderBarFill"></div></div>
   <div class="loader-pct" id="loaderPct">0%</div>
 </div>
@@ -287,16 +299,17 @@
 
 <nav class="navbar" id="navbar">
   <a href="#top" class="nav-brand">
-    <img src="assets/logo.jpg" alt="Dr. Sabrina Pets Clinic logo">
-    <span>Dr. Sabrina</span>
+    <img src="assets/logo-icon.jpg" alt="Dr. Sabrina Pets Clinic logo">
+    <span data-i18n="navBrand">Dr. Sabrina</span>
   </a>
   <div class="nav-menu-group">
     <div class="nav-links">
-      <a href="#features">Services</a>
-      <a href="#testimonials">Stories</a>
-      <a href="#cardScanner">Patient Card</a>
+      <a href="#features" data-i18n="navServices">Services</a>
+      <a href="#testimonials" data-i18n="navStories">Stories</a>
+      <a href="#cardScanner" data-i18n="navPatientCard">Patient Card</a>
     </div>
-    <a href="#cta" class="nav-cta">Book a Visit</a>
+    <button class="lang-toggle" id="langToggle" type="button">AR</button>
+    <a href="https://wa.me/962795399513" target="_blank" rel="noopener" class="nav-cta" data-i18n="navBookVisit">Book a Visit</a>
   </div>
 </nav>
 
@@ -306,16 +319,16 @@
   <div class="hero__orb hero__orb--2"></div>
   <div class="hero__orb hero__orb--3"></div>
   <div class="hero-content" id="heroContent">
-    <span class="eyebrow">Dr. Sabrina Pets Clinic · Irbid</span>
-    <h1>The clinic Irbid's cats <em>actually</em> trust</h1>
-    <p class="lead">Gentle checkups, full diagnostics, and a team that knows every patient by name — Dr. Sabrina and her clinic treat every cat (and the occasional dog) like family.</p>
+    <span class="eyebrow" data-i18n="heroEyebrow">Dr. Sabrina Pets Clinic · Irbid</span>
+    <h1 data-i18n-html="heroTitle">The clinic Irbid's cats <em>actually</em> trust</h1>
+    <p class="lead" data-i18n="heroLead">Gentle checkups, full diagnostics, and a team that knows every patient by name — Dr. Sabrina and her clinic treat every cat (and the occasional dog) like family.</p>
     <div class="hero-actions">
-      <a href="#cta" class="btn btn-primary">Book a Visit</a>
-      <a href="#features" class="btn btn-secondary">See Our Services</a>
+      <a href="https://wa.me/962795399513" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="heroBtnBook">Book a Visit</a>
+      <a href="#features" class="btn btn-secondary" data-i18n="heroBtnServices">See Our Services</a>
     </div>
   </div>
   <a href="#scrollAnim" class="scroll-hint">
-    <span>Scroll to meet a patient</span>
+    <span data-i18n="scrollHint">Scroll to meet a patient</span>
     <span class="line"></span>
   </a>
 </section>
@@ -327,26 +340,26 @@
 
     <div class="annotation-card annotation-card--1" data-show="0.04" data-hide="0.27">
       <span class="annotation-num">01</span>
-      <h3>Every visit starts calm</h3>
-      <p>No rushed exam tables. Every cat gets a moment to settle in before anything else happens.</p>
+      <h3 data-i18n="card1Title">Every visit starts calm</h3>
+      <p data-i18n="card1Desc">No rushed exam tables. Every cat gets a moment to settle in before anything else happens.</p>
     </div>
 
     <div class="annotation-card annotation-card--2" data-show="0.29" data-hide="0.50">
       <span class="annotation-num">02</span>
-      <h3>Eyes that miss nothing</h3>
-      <p>On-site bloodwork, imaging, and dental checks — so small issues don't become big ones.</p>
+      <h3 data-i18n="card2Title">Eyes that miss nothing</h3>
+      <p data-i18n="card2Desc">On-site bloodwork, imaging, and dental checks — so small issues don't become big ones.</p>
     </div>
 
     <div class="annotation-card annotation-card--3" data-show="0.52" data-hide="0.73">
       <span class="annotation-num">03</span>
-      <h3>Hands-on, always</h3>
-      <p>Vaccination, surgery, grooming, emergencies — Dr. Sabrina is personally involved in every case.</p>
+      <h3 data-i18n="card3Title">Hands-on, always</h3>
+      <p data-i18n="card3Desc">Vaccination, surgery, grooming, emergencies — Dr. Sabrina is personally involved in every case.</p>
     </div>
 
     <div class="annotation-card annotation-card--4" data-show="0.75" data-hide="0.98">
       <span class="annotation-num">04</span>
-      <h3>She's looking right at you</h3>
-      <p>Because that's how every patient is treated here — like the only one in the room.</p>
+      <h3 data-i18n="card4Title">She's looking right at you</h3>
+      <p data-i18n="card4Desc">Because that's how every patient is treated here — like the only one in the room.</p>
     </div>
   </div>
 </section>
@@ -354,10 +367,10 @@
 <section class="specs" id="specs">
   <div class="container">
     <div class="specs-grid">
-      <div class="spec"><div class="stat-number" data-target="9" data-suffix="+">0</div><div class="spec-label">Years Caring for Irbid's Pets</div></div>
-      <div class="spec"><div class="stat-number" data-target="4000" data-suffix="+">0</div><div class="spec-label">Cats &amp; Pets Treated</div></div>
-      <div class="spec"><div class="stat-number" data-target="98" data-suffix="%">0</div><div class="spec-label">Happy Pet Parents</div></div>
-      <div class="spec"><div class="stat-number" data-target="7" data-suffix="">0</div><div class="spec-label">Days a Week Open</div></div>
+      <div class="spec"><div class="stat-number" data-target="9" data-suffix="+">0</div><div class="spec-label" data-i18n="specLabel1">Years Caring for Irbid's Pets</div></div>
+      <div class="spec"><div class="stat-number" data-target="4000" data-suffix="+">0</div><div class="spec-label" data-i18n="specLabel2">Cats &amp; Pets Treated</div></div>
+      <div class="spec"><div class="stat-number" data-target="98" data-suffix="%">0</div><div class="spec-label" data-i18n="specLabel3">Happy Pet Parents</div></div>
+      <div class="spec"><div class="stat-number" data-target="7" data-suffix="">0</div><div class="spec-label" data-i18n="specLabel4">Days a Week Open</div></div>
     </div>
   </div>
 </section>
@@ -365,44 +378,44 @@
 <section class="features" id="features">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Services</span>
-      <h2>Built around how cats actually feel</h2>
-      <p>A full range of care, led by a cat-first approach — and just as welcoming to dogs and other family pets.</p>
+      <span class="eyebrow" data-i18n="featuresEyebrow">Services</span>
+      <h2 data-i18n="featuresTitle">Built around how cats actually feel</h2>
+      <p data-i18n="featuresDesc">A full range of care, led by a cat-first approach — and just as welcoming to dogs and other family pets.</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card reveal"><div class="feature-icon">🐾</div><h3>Cat Wellness &amp; Checkups</h3><p>Routine exams designed around feline behavior, not against it.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">💉</div><h3>Vaccination</h3><p>Core and lifestyle vaccines on a schedule that fits your cat.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">🦷</div><h3>Dentistry</h3><p>Cleanings and treatment before small problems turn painful.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">🩻</div><h3>Diagnostic Imaging</h3><p>On-site X-ray and ultrasound for fast, accurate answers.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">✂️</div><h3>Grooming</h3><p>Calm, low-stress grooming for cats who'd rather be anywhere else.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">🐶</div><h3>General Consultation</h3><p>For dogs and other pets too — the whole family is welcome.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">🚑</div><h3>Emergency Care</h3><p>Urgent cases seen with priority, no appointment required.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">🔬</div><h3>Laboratory Testing</h3><p>In-house bloodwork and lab results without the long wait.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🐾</div><h3 data-i18n="feat1Title">Cat Wellness &amp; Checkups</h3><p data-i18n="feat1Desc">Routine exams designed around feline behavior, not against it.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">💉</div><h3 data-i18n="feat2Title">Vaccination</h3><p data-i18n="feat2Desc">Core and lifestyle vaccines on a schedule that fits your cat.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🦷</div><h3 data-i18n="feat3Title">Dentistry</h3><p data-i18n="feat3Desc">Cleanings and treatment before small problems turn painful.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🩻</div><h3 data-i18n="feat4Title">Diagnostic Imaging</h3><p data-i18n="feat4Desc">On-site X-ray and ultrasound for fast, accurate answers.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">✂️</div><h3 data-i18n="feat5Title">Grooming</h3><p data-i18n="feat5Desc">Calm, low-stress grooming for cats who'd rather be anywhere else.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🐶</div><h3 data-i18n="feat6Title">General Consultation</h3><p data-i18n="feat6Desc">For dogs and other pets too — the whole family is welcome.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🚑</div><h3 data-i18n="feat7Title">Emergency Care</h3><p data-i18n="feat7Desc">Urgent cases seen with priority, no appointment required.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🔬</div><h3 data-i18n="feat8Title">Laboratory Testing</h3><p data-i18n="feat8Desc">In-house bloodwork and lab results without the long wait.</p></div>
     </div>
   </div>
 </section>
 
 <section class="cta" id="cta">
   <div class="cta-box reveal">
-    <h2>Ready when your cat is</h2>
-    <p>Book an appointment with Dr. Sabrina's team in Irbid — new patients usually seen within the week.</p>
-    <button class="btn btn-primary" id="ctaButton">Book a Visit</button>
-    <div class="cta-note">Online booking is on its way — for now, reach the clinic directly to schedule.</div>
+    <h2 data-i18n="ctaTitle">Ready when your cat is</h2>
+    <p data-i18n="ctaDesc">Book an appointment with Dr. Sabrina's team in Irbid — new patients usually seen within the week.</p>
+    <a href="https://wa.me/962795399513" target="_blank" rel="noopener" class="btn btn-primary" id="ctaButton" data-i18n="ctaBtn">Book a Visit</a>
+    <div class="cta-note" data-i18n="ctaNote">You'll be taken to WhatsApp to message the clinic directly.</div>
   </div>
 </section>
 
 <section class="testimonials" id="testimonials">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Pet Parents Say</span>
-      <h2>Stories from the waiting room</h2>
+      <span class="eyebrow" data-i18n="testimonialsEyebrow">Pet Parents Say</span>
+      <h2 data-i18n="testimonialsTitle">Stories from the waiting room</h2>
     </div>
   </div>
   <div class="container">
     <div class="testimonials__track" id="testimonialsTrack">
-      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p>"My cat hates car rides, let alone vets — but she was purring on the table within five minutes. I still don't know how Dr. Sabrina does it."</p><div class="testimonial-author"><div class="testimonial-avatar">L</div><div><strong>Lina K.</strong><span>Cat parent, Irbid</span></div></div></div>
-      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p>"We found a lump on our cat on a Thursday night and they saw us within the hour. That kind of care is rare."</p><div class="testimonial-author"><div class="testimonial-avatar">O</div><div><strong>Omar H.</strong><span>Cat parent, Irbid</span></div></div></div>
-      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p>"Three cats, three completely different personalities, and the whole team knows each one by name."</p><div class="testimonial-author"><div class="testimonial-avatar">R</div><div><strong>Rana A.</strong><span>Cat parent, Irbid</span></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p data-i18n="t1Quote">"My cat hates car rides, let alone vets — but she was purring on the table within five minutes. I still don't know how Dr. Sabrina does it."</p><div class="testimonial-author"><div class="testimonial-avatar">L</div><div><strong data-i18n="t1Name">Lina K.</strong><span data-i18n="t1Role">Cat parent, Irbid</span></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p data-i18n="t2Quote">"We found a lump on our cat on a Thursday night and they saw us within the hour. That kind of care is rare."</p><div class="testimonial-author"><div class="testimonial-avatar">O</div><div><strong data-i18n="t2Name">Omar H.</strong><span data-i18n="t2Role">Cat parent, Irbid</span></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p data-i18n="t3Quote">"Three cats, three completely different personalities, and the whole team knows each one by name."</p><div class="testimonial-author"><div class="testimonial-avatar">R</div><div><strong data-i18n="t3Name">Rana A.</strong><span data-i18n="t3Role">Cat parent, Irbid</span></div></div></div>
     </div>
   </div>
 </section>
@@ -410,45 +423,214 @@
 <section class="card-scanner" id="cardScanner">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Patient Care</span>
-      <h2>Every cat gets a card</h2>
-      <p>A simple profile for every patient — from the first checkup to every visit after.</p>
+      <span class="eyebrow" data-i18n="cardScannerEyebrow">Patient Care</span>
+      <h2 data-i18n="cardScannerTitle">Every cat gets a card</h2>
+      <p data-i18n="cardScannerDesc">A simple profile for every patient — from the first checkup to every visit after.</p>
     </div>
   </div>
   <div class="card3d-wrap" id="card3d"></div>
-  <div class="card3d-hint">Move your cursor over the card</div>
+  <div class="card3d-hint" data-i18n="cardScannerHint">Move your cursor over the card</div>
 </section>
 
 <footer>
   <div class="footer-grid">
     <div>
       <div class="footer-brand">
-        <img src="assets/logo.jpg" alt="Dr. Sabrina Pets Clinic logo">
-        <div><strong>Dr. Sabrina Pets Clinic</strong><span>Irbid, Jordan</span></div>
+        <img src="assets/logo-icon.jpg" alt="Dr. Sabrina Pets Clinic logo">
+        <div><strong>Dr. Sabrina Pets Clinic</strong><span data-i18n="footerTagline">Irbid, Jordan</span></div>
       </div>
     </div>
     <div class="footer-col">
-      <h4>Explore</h4>
-      <a href="#features">Services</a>
-      <a href="#testimonials">Stories</a>
-      <a href="#cardScanner">Patient Card</a>
+      <h4 data-i18n="footerExploreHeading">Explore</h4>
+      <a href="#features" data-i18n="navServices">Services</a>
+      <a href="#testimonials" data-i18n="navStories">Stories</a>
+      <a href="#cardScanner" data-i18n="navPatientCard">Patient Card</a>
     </div>
     <div class="footer-col">
-      <h4>Visit</h4>
-      <p>Prince Hassan St. area, Irbid, Jordan</p>
-      <a href="#cta">Book a Visit</a>
+      <h4 data-i18n="footerVisitHeading">Visit</h4>
+      <p data-i18n="footerAddress">Prince Hassan St. area, Irbid, Jordan</p>
+      <a href="https://wa.me/962795399513" target="_blank" rel="noopener" data-i18n="navBookVisit">Book a Visit</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footerFollowHeading">Follow</h4>
+      <a href="https://wa.me/962795399513" target="_blank" rel="noopener">WhatsApp: 0795 399 513</a>
+      <a href="https://www.instagram.com/dr.sabrin.pc/" target="_blank" rel="noopener" data-i18n="footerInstagram">Instagram</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 Dr. Sabrina Pets Clinic</span>
-    <span>Made for Irbid's cats, mostly.</span>
+    <span data-i18n="footerCopyright">© 2026 Dr. Sabrina Pets Clinic</span>
+    <span data-i18n="footerBottomTagline">Made for Irbid's cats, mostly.</span>
   </div>
 </footer>
 
 <script type="module">
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
-const TOTAL_FRAMES = 96;
+/* ================= i18n ================= */
+const TRANSLATIONS = {
+  en: {
+    pageTitle: "Dr. Sabrina Pets Clinic — Irbid",
+    metaDescription: "Dr. Sabrina Pets Clinic — Irbid's trusted address for calm, attentive cat care (and the occasional dog).",
+    loaderText: "Dr. Sabrina Pets Clinic",
+    navBrand: "Dr. Sabrina",
+    navServices: "Services",
+    navStories: "Stories",
+    navPatientCard: "Patient Card",
+    navBookVisit: "Book a Visit",
+    heroEyebrow: "Dr. Sabrina Pets Clinic · Irbid",
+    heroTitle: "The clinic Irbid's cats <em>actually</em> trust",
+    heroLead: "Gentle checkups, full diagnostics, and a team that knows every patient by name — Dr. Sabrina and her clinic treat every cat (and the occasional dog) like family.",
+    heroBtnBook: "Book a Visit",
+    heroBtnServices: "See Our Services",
+    scrollHint: "Scroll to meet a patient",
+    card1Title: "Every visit starts calm",
+    card1Desc: "No rushed exam tables. Every cat gets a moment to settle in before anything else happens.",
+    card2Title: "Eyes that miss nothing",
+    card2Desc: "On-site bloodwork, imaging, and dental checks — so small issues don't become big ones.",
+    card3Title: "Hands-on, always",
+    card3Desc: "Vaccination, surgery, grooming, emergencies — Dr. Sabrina is personally involved in every case.",
+    card4Title: "She's looking right at you",
+    card4Desc: "Because that's how every patient is treated here — like the only one in the room.",
+    specLabel1: "Years Caring for Irbid's Pets",
+    specLabel2: "Cats & Pets Treated",
+    specLabel3: "Happy Pet Parents",
+    specLabel4: "Days a Week Open",
+    featuresEyebrow: "Services",
+    featuresTitle: "Built around how cats actually feel",
+    featuresDesc: "A full range of care, led by a cat-first approach — and just as welcoming to dogs and other family pets.",
+    feat1Title: "Cat Wellness & Checkups", feat1Desc: "Routine exams designed around feline behavior, not against it.",
+    feat2Title: "Vaccination", feat2Desc: "Core and lifestyle vaccines on a schedule that fits your cat.",
+    feat3Title: "Dentistry", feat3Desc: "Cleanings and treatment before small problems turn painful.",
+    feat4Title: "Diagnostic Imaging", feat4Desc: "On-site X-ray and ultrasound for fast, accurate answers.",
+    feat5Title: "Grooming", feat5Desc: "Calm, low-stress grooming for cats who'd rather be anywhere else.",
+    feat6Title: "General Consultation", feat6Desc: "For dogs and other pets too — the whole family is welcome.",
+    feat7Title: "Emergency Care", feat7Desc: "Urgent cases seen with priority, no appointment required.",
+    feat8Title: "Laboratory Testing", feat8Desc: "In-house bloodwork and lab results without the long wait.",
+    ctaTitle: "Ready when your cat is",
+    ctaDesc: "Book an appointment with Dr. Sabrina's team in Irbid — new patients usually seen within the week.",
+    ctaBtn: "Book a Visit",
+    ctaNote: "You'll be taken to WhatsApp to message the clinic directly.",
+    testimonialsEyebrow: "Pet Parents Say",
+    testimonialsTitle: "Stories from the waiting room",
+    t1Quote: "\"My cat hates car rides, let alone vets — but she was purring on the table within five minutes. I still don't know how Dr. Sabrina does it.\"",
+    t1Name: "Lina K.", t1Role: "Cat parent, Irbid",
+    t2Quote: "\"We found a lump on our cat on a Thursday night and they saw us within the hour. That kind of care is rare.\"",
+    t2Name: "Omar H.", t2Role: "Cat parent, Irbid",
+    t3Quote: "\"Three cats, three completely different personalities, and the whole team knows each one by name.\"",
+    t3Name: "Rana A.", t3Role: "Cat parent, Irbid",
+    cardScannerEyebrow: "Patient Care",
+    cardScannerTitle: "Every cat gets a card",
+    cardScannerDesc: "A simple profile for every patient — from the first checkup to every visit after.",
+    cardScannerHint: "Move your cursor over the card",
+    footerTagline: "Irbid, Jordan",
+    footerExploreHeading: "Explore",
+    footerVisitHeading: "Visit",
+    footerAddress: "Prince Hassan St. area, Irbid, Jordan",
+    footerFollowHeading: "Follow",
+    footerInstagram: "Instagram",
+    footerCopyright: "© 2026 Dr. Sabrina Pets Clinic",
+    footerBottomTagline: "Made for Irbid's cats, mostly."
+  },
+  ar: {
+    pageTitle: "عيادة د. صبرين للحيوانات الأليفة — إربد",
+    metaDescription: "عيادة د. صبرين للحيوانات الأليفة في إربد — عناية هادئة ومتكاملة بالقطط (وأحياناً الكلاب).",
+    loaderText: "عيادة د. صبرين للحيوانات الأليفة",
+    navBrand: "د. صبرين",
+    navServices: "الخدمات",
+    navStories: "آراء العملاء",
+    navPatientCard: "بطاقة المريض",
+    navBookVisit: "احجز موعد",
+    heroEyebrow: "عيادة د. صبرين للحيوانات الأليفة · إربد",
+    heroTitle: "العيادة اللي قطط إربد بتثق فيها <em>فعلاً</em>",
+    heroLead: "فحوصات هادئة، تشخيص متكامل، وفريق يعرف كل مريض بالاسم — د. صبرين وعيادتها بيتعاملوا مع كل قطة (وأحياناً كلب) وكأنها من العائلة.",
+    heroBtnBook: "احجز موعد",
+    heroBtnServices: "تصفح خدماتنا",
+    scrollHint: "مرر للأسفل لتتعرف على أحد المرضى",
+    card1Title: "كل زيارة تبدأ بهدوء",
+    card1Desc: "بدون طاولات فحص متسرعة. كل قطة تاخذ وقتها لتطمئن قبل أي إجراء.",
+    card2Title: "عيون ما بتفوتها شي",
+    card2Desc: "تحاليل دم وأشعة وفحص أسنان داخل العيادة — حتى ما تصير المشاكل الصغيرة كبيرة.",
+    card3Title: "حاضرين دايماً",
+    card3Desc: "تطعيم، عمليات، تنظيف، وحالات طارئة — د. صبرين متابعة بنفسها كل حالة.",
+    card4Title: "هلق عم تشوفك بعينها",
+    card4Desc: "لأنو هيك بتعامل مع كل مريض هون — وكأنه الوحيد بالغرفة.",
+    specLabel1: "سنين بخدمة حيوانات إربد",
+    specLabel2: "قطة وحيوان تمت معالجتهم",
+    specLabel3: "نسبة رضا أصحاب الحيوانات",
+    specLabel4: "أيام الدوام بالأسبوع",
+    featuresEyebrow: "خدماتنا",
+    featuresTitle: "خدمات مبنية على فهم شعور القطط",
+    featuresDesc: "مجموعة متكاملة من الرعاية، بأسلوب يراعي القطط أولاً — ومرحب فيه كمان بالكلاب وبقية أفراد العائلة.",
+    feat1Title: "فحص وعناية دورية للقطط", feat1Desc: "فحوصات روتينية مصممة حسب طبيعة سلوك القطط، مش بالعكس.",
+    feat2Title: "تطعيمات", feat2Desc: "تطعيمات أساسية وموسمية بجدول يناسب قطتك.",
+    feat3Title: "طب أسنان", feat3Desc: "تنظيف وعلاج قبل ما تتحول المشاكل البسيطة لوجع حقيقي.",
+    feat4Title: "أشعة وتشخيص", feat4Desc: "أشعة سينية وسونار داخل العيادة لنتائج سريعة ودقيقة.",
+    feat5Title: "تنظيف وتجميل", feat5Desc: "تنظيف هادئ ومريح للقطط اللي بتكره هالتجربة.",
+    feat6Title: "استشارة عامة", feat6Desc: "لكل أنواع الحيوانات الأليفة — كل العائلة مرحب فيها.",
+    feat7Title: "حالات طارئة", feat7Desc: "استقبال الحالات الطارئة بأولوية، بدون موعد مسبق.",
+    feat8Title: "تحاليل مخبرية", feat8Desc: "تحاليل دم ومختبر داخل العيادة بدون انتظار طويل.",
+    ctaTitle: "جاهزين لما تكون قطتك جاهزة",
+    ctaDesc: "احجز موعد مع فريق د. صبرين بإربد — معظم المرضى الجدد بناخدلهم موعد خلال أسبوع.",
+    ctaBtn: "احجز موعد",
+    ctaNote: "رح ينفتحلك واتساب لمراسلة العيادة مباشرة.",
+    testimonialsEyebrow: "آراء أصحاب الحيوانات",
+    testimonialsTitle: "قصص من غرفة الانتظار",
+    t1Quote: "«قطتي بتكره السيارة، خلّي عنك الدكتور — بس صارت تحن داخل خمس دقايق بس. لسا ما بعرف كيف د. صبرين عملتها.»",
+    t1Name: "لينا ك.", t1Role: "صاحبة قطة، إربد",
+    t2Quote: "«لقينا ورم عند قطتنا مساء خميس، واستقبلونا خلال ساعة. هيك اهتمام نادر.»",
+    t2Name: "عمر ح.", t2Role: "صاحب قطة، إربد",
+    t3Quote: "«عنا ثلاث قطط، كل وحدة شخصيتها مختلفة، والفريق كله يعرفهم بالاسم.»",
+    t3Name: "رنا أ.", t3Role: "صاحبة قطة، إربد",
+    cardScannerEyebrow: "بطاقة المريض",
+    cardScannerTitle: "كل قطة إلها بطاقة خاصة فيها",
+    cardScannerDesc: "ملف بسيط لكل مريض — من أول كشف لكل زيارة بعدها.",
+    cardScannerHint: "حرك الماوس فوق البطاقة",
+    footerTagline: "إربد، الأردن",
+    footerExploreHeading: "تصفح",
+    footerVisitHeading: "زورونا",
+    footerAddress: "منطقة شارع الأمير حسن، إربد، الأردن",
+    footerFollowHeading: "تواصل معنا",
+    footerInstagram: "إنستغرام",
+    footerCopyright: "© 2026 عيادة د. صبرين للحيوانات الأليفة",
+    footerBottomTagline: "بكل حب لقطط إربد."
+  }
+};
+
+const langToggle = document.getElementById('langToggle');
+
+function setLanguage(lang){
+  const dict = TRANSLATIONS[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.dataset.i18n;
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+    const key = el.dataset.i18nHtml;
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.title = dict.pageTitle;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute('content', dict.metaDescription);
+  langToggle.textContent = lang === 'ar' ? 'EN' : 'AR';
+  try { localStorage.setItem('drsabrina_lang', lang); } catch (e) {}
+}
+
+langToggle.addEventListener('click', () => {
+  const current = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+  setLanguage(current === 'ar' ? 'en' : 'ar');
+});
+
+let initialLang = 'en';
+try {
+  const saved = localStorage.getItem('drsabrina_lang');
+  if (saved === 'ar' || saved === 'en') initialLang = saved;
+} catch (e) {}
+setLanguage(initialLang);
+
+/* ================= frame sequence ================= */
+const TOTAL_FRAMES = 236;
 const frames = new Array(TOTAL_FRAMES);
 let loadedCount = 0;
 
@@ -458,7 +640,7 @@ const loaderPct = document.getElementById('loaderPct');
 const heroContent = document.getElementById('heroContent');
 
 function frameSrc(i){
-  return `frames/frame_${String(i + 1).padStart(4, '0')}.jpg`;
+  return `frames/frame_${String(i + 1).padStart(4, '0')}.webp`;
 }
 
 function preloadFrames(){
@@ -813,6 +995,32 @@ function buildCardTextures(logoImg){
   return [new THREE.CanvasTexture(front), new THREE.CanvasTexture(back)];
 }
 
+function roundedCardShape(w, h, r){
+  const shape = new THREE.Shape();
+  const x = -w / 2, y = -h / 2;
+  shape.moveTo(x + r, y);
+  shape.lineTo(x + w - r, y);
+  shape.quadraticCurveTo(x + w, y, x + w, y + r);
+  shape.lineTo(x + w, y + h - r);
+  shape.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  shape.lineTo(x + r, y + h);
+  shape.quadraticCurveTo(x, y + h, x, y + h - r);
+  shape.lineTo(x, y + r);
+  shape.quadraticCurveTo(x, y, x + r, y);
+  return shape;
+}
+
+function makeCardGeometry(w, h, r){
+  const geo = new THREE.ShapeGeometry(roundedCardShape(w, h, r), 24);
+  const pos = geo.attributes.position;
+  const uv = geo.attributes.uv;
+  for (let i = 0; i < pos.count; i++){
+    uv.setXY(i, (pos.getX(i) + w / 2) / w, (pos.getY(i) + h / 2) / h);
+  }
+  uv.needsUpdate = true;
+  return geo;
+}
+
 function initCardScanner(){
   const container = document.getElementById('card3d');
   if (!container) return;
@@ -852,12 +1060,22 @@ function initCardScanner(){
 
   function buildCard(logoImg){
     const [frontTex, backTex] = buildCardTextures(logoImg);
-    const geo = new THREE.BoxGeometry(2.6, 1.6, 0.04);
-    const edgeMat = new THREE.MeshStandardMaterial({ color: 0xF6DDE3, roughness: 0.5 });
-    const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.4 });
-    const backMat = new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.4 });
-    const card = new THREE.Mesh(geo, [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat]);
-    group.add(card);
+    backTex.wrapS = THREE.RepeatWrapping;
+    backTex.repeat.x = -1;
+    backTex.offset.x = 1;
+
+    const cardGeo = makeCardGeometry(2.6, 1.6, 0.16);
+    const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.45 });
+    const backMat = new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.45 });
+
+    const frontMesh = new THREE.Mesh(cardGeo, frontMat);
+    frontMesh.position.z = 0.006;
+
+    const backMesh = new THREE.Mesh(cardGeo, backMat);
+    backMesh.rotation.y = Math.PI;
+    backMesh.position.z = -0.006;
+
+    group.add(frontMesh, backMesh);
   }
 
   const logoImg = new Image();
@@ -875,13 +1093,17 @@ function initCardScanner(){
   });
   container.addEventListener('pointerleave', () => { targetRotY = 0; targetRotX = 0; });
 
+  let lastTs = 0;
   function animate(ts){
     requestAnimationFrame(animate);
-    currentRotY += (targetRotY - currentRotY) * 0.06;
-    currentRotX += (targetRotX - currentRotX) * 0.06;
-    group.rotation.y = ts * 0.00015 + currentRotY;
+    const dt = lastTs ? Math.min((ts - lastTs) / 1000, 0.05) : 0.016;
+    lastTs = ts;
+    const damp = 1 - Math.pow(0.001, dt);
+    currentRotY += (targetRotY - currentRotY) * damp;
+    currentRotX += (targetRotX - currentRotX) * damp;
+    group.rotation.y = ts * 0.00012 + currentRotY;
     group.rotation.x = currentRotX;
-    particles.rotation.y = ts * 0.00005;
+    particles.rotation.y = ts * 0.00004;
     renderer.render(scene, camera);
   }
   requestAnimationFrame(animate);
